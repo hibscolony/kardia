@@ -25,12 +25,12 @@ npm run preview
 
 1. Put the source in a GitHub repository on branch `main` (include `public/models/`, `public/data/`, package-lock.json and `.github/workflows/deploy.yml`).
 2. In repository **Settings → Pages**, select **GitHub Actions** as the build source.
-3. Add repository Actions variable `ENABLE_PAGES` = `true` after enabling Pages. Push to `main` or run the **Deploy KARDIA to GitHub Pages** workflow manually.
-4. The workflow runs unit tests, type-checks/builds, uploads `dist/`, and deploys to Pages.
+3. Push to `main` or open **Actions → Deploy KARDIA to GitHub Pages → Run workflow** to deploy.
+4. The workflow runs unit tests, type-checks/builds, uploads `dist/`, and deploys to Pages. The public URL is https://hibscolony.github.io/kardia/ after successful deployment.
 
 Vite uses a relative base and navigation uses URL hashes, so repository subpaths and refreshes work without rewrite rules. `npm ci` restores the exact pinned dependency tree and copies the matching runtime files automatically. The build emits the WASM module loader as a bundled asset. No secret keys are needed.
 
-Repository: https://github.com/hibscolony/kardia (private). Source is uploaded; public website publication is not enabled. Tests and builds run on pushes. Pages deployment is gated by the `ENABLE_PAGES` repository variable so source-only uploads do not fail on an unconfigured Pages site. Private-repository Pages availability depends on the account plan.
+Repository: https://github.com/hibscolony/kardia (public). Tests, builds and Pages deployment run on pushes. GitHub Pages must first be enabled in the repository's Pages settings. If it is not yet enabled, the deployment job may fail until you configure the source and rerun the workflow.
 
 ## Five application pages
 
