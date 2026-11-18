@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>KARDIA numerical verification</title>
+  </head>
+  <body>
+    <h1>KARDIA browser parity test</h1>
+    <p>
+      Development-only verification against Python ONNX Runtime CPU on 12 real
+      MIT-BIH beats, both schemes.
+    </p>
+    <button id="run">Run parity verification</button>
+    <pre id="output">Not run</pre>
+    <script type="module">
+      import { loadModels, infer, validateDataset } from "/src/inference.ts";
+      document.querySelector("#run").onclick = async () => {
+        const out = document.querySelector("#output");
+        try {
+          const d = validateDataset(
+            await (await fetch("/data/demo.json")).json(),
+          );
+          const ref = await (
+            await fetch("/artifacts/reference_predictions.json")
+          ).json();
+          let max = 0;
+          let count = 0;
+          for (const n of [4, 3]) {
+            await loadModels(n, (s) => (out.textContent = s));
+            for (let b = 0; b < d.ecg.length; b++) {
+              const r = await infer(d, b, n);
+              r.probabilities.forEach(
+                (p, i) => (max = Math.max(max, Math.abs(p - ref[n][b][i]))),
+              );
+              count++;
+              out.textContent = `Checked ${count} beats; max absolute probability difference ${max}`;
+            }
+          }
+          out.textContent = `${max < 1e-5 ? "PASS" : "FAIL"}: ${count} inferences; max absolute probability difference ${max}; threshold 1e-5`;
+        } catch (e) {
+          out.textContent = "FAIL: " + e;
+        }
+      };
+    </script>
+  </body>
+</html>

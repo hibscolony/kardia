@@ -1,0 +1,25 @@
+{
+  "browser_parity": {
+    "inferences": 24,
+    "max_absolute_probability_error": 5.619055565286857e-08,
+    "threshold": 1e-05,
+    "status": "PASS"
+  },
+  "production_subpath": "/kardia/",
+  "browser_ui": [
+    "WASM loading both schemes",
+    "real demo inference",
+    "valid JSON upload",
+    "invalid JSON rejection",
+    "beat navigation resets result",
+    "PDF report download"
+  ],
+  "viewport_mobile": {
+    "width": 390,
+    "horizontal_overflow": false
+  },
+  "limitations": [
+    "Not clinically validated",
+    "npm audit reports four development dependency advisories via picomatch; current registry latest 4.0.7 remains affected"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "accuracy": 0.9526313557525126,
+  "macro_f1": 0.747714585788655,
+  "weighted_f1": 0.947858382234121,
+  "per_class_f1": {
+    "N": 0.9747617699782999,
+    "S": 0.3323963457484188,
+    "V": 0.9359856416392461
+  },
+  "n_classes": 3,
+  "labels": [
+    "N",
+    "S",
+    "V"
+  ],
+  "n_test_beats": 47162,
+  "selected_on_val": "ensemble",
+  "val_macro_f1_before_tuning": 0.7467277142075829,
+  "val_macro_f1_after_tuning": 0.7488548562160534,
+  "logit_bias": [
+    0.0,
+    0.0,
+    0.5
+  ],
+  "seed_val_f1": {
+    "42": 0.743891110870415,
+    "123": 0.7438657310363329
+  },
+  "conformal": {
+    "alpha": 0.1,
+    "qhat": 0.060034247637460014,
+    "coverage": 0.8642339171366779,
+    "avg_set_size": 0.876828802849752,
+    "singleton_rate": 0.876828802849752
+  },
+  "test_protocol": "DS2 without record 202; held out",
+  "rpeak_source": "MIT-BIH expert annotations",
+  "fast_run": false
+}

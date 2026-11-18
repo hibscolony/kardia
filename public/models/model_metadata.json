@@ -1,0 +1,61 @@
+{
+  "project": "KARDIA",
+  "model_family": "MultiScale CNN + Temporal Self-Attention + RR Cross-Attention",
+  "model_inputs": {
+    "ecg": [
+      "batch",
+      4,
+      256
+    ],
+    "rr": [
+      "batch",
+      8
+    ]
+  },
+  "input_notes": "ecg: 2 lead x (denyut kini, denyut sebelumnya), urutan kanal [current_lead1, current_lead2, previous_lead1, previous_lead2]. RR: 8 fitur temporal yang distandardisasi memakai scaler per skema.",
+  "sampling_rate_hz": 360,
+  "beat_window_samples": {
+    "left": 112,
+    "right": 144
+  },
+  "source_preprocessing": "Bandpass Butterworth order 3 0.5-40 Hz (zero-phase sosfiltfilt), median subtraction, normalization by 95th percentile abs with minimum 0.05, clamp to [-5,5], RR feature normalization by training scaler and clamp [-8,8]. R-peaks in original evaluation are from MIT-BIH expert annotations.",
+  "warning": "Research prototype only. Never claim general raw-upload clinical diagnosis.",
+  "schemes": {
+    "4": {
+      "labels": [
+        "N",
+        "S",
+        "V",
+        "F"
+      ],
+      "selected_on_validation": "ensemble",
+      "logit_bias": [
+        0.0,
+        1.2,
+        0.5,
+        -0.6
+      ],
+      "accuracy": 0.9316494563502913,
+      "macro_f1": 0.6310384729331685,
+      "n_test_beats": 47549,
+      "inference_rule": "Compute softmax(logits) for each seed; average probabilities for ensemble; then compute softmax(log(max(mean_probs,1e-8)) + logit_bias)."
+    },
+    "3": {
+      "labels": [
+        "N",
+        "S",
+        "V"
+      ],
+      "selected_on_validation": "ensemble",
+      "logit_bias": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "accuracy": 0.9526313557525126,
+      "macro_f1": 0.747714585788655,
+      "n_test_beats": 47162,
+      "inference_rule": "Compute softmax(logits) for each seed; average probabilities for ensemble; then compute softmax(log(max(mean_probs,1e-8)) + logit_bias)."
+    }
+  }
+}
